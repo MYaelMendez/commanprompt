@@ -1,8 +1,11 @@
 # Commanprompt
 
-This project showcases a minimal, animated web-based command line interface. It
-consists of a single HTML page with accompanying JavaScript and CSS that render
-an interactive prompt with particle effects. This repository also includes a detailed system prompt and project framework in [SYSTEM_PROMPT.md](SYSTEM_PROMPT.md).
+This project showcases a minimal, animated web-based command line interface.
+It consists of a single HTML page with accompanying JavaScript and CSS that
+render an interactive prompt with particle effects. This repository also
+includes a detailed system prompt and project framework in
+[SYSTEM_PROMPT.md](SYSTEM_PROMPT.md). In addition to the browser demo, a Node
+CLI is provided for experimenting with AT Protocol commands offline.
 
 ## Usage
 
@@ -19,5 +22,17 @@ The main files are:
 * `script.js` – particle effect logic and command handling
 
 No build step is required; simply open the HTML file to view the demo.
+
+### Node CLI
+
+This repository also contains `atproto-cli.js`, a simple interactive command
+line tool that mimics AT Protocol commands. Run it with Node.js:
+
+```bash
+npm start
+```
+
+This launches a prompt where you can issue commands like `create identity` or
+`deploy` to see simulated responses.
 
 

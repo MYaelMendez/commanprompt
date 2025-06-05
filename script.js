@@ -1,6 +1,7 @@
 const cli = document.getElementById('cli');
 const cursor = document.getElementById('cursor');
 const input = document.getElementById('input');
+const universe = document.getElementById('universe');
 
 const colors = ['#fff', '#00FF00', '#FFA500', '#800080', '#00FFFF', '#FF00FF'];
 const emojis = ['⚫️', '🟢', '🍊', '🟣', '⚪️', '🗝️'];
@@ -54,6 +55,7 @@ function elasticEffect() {
 }
 
 function processCommand(command) {
+    elasticEffect();
     const idx = Math.floor(Math.random() * colors.length);
     cursor.style.color = colors[idx];
     input.style.color = colors[idx];

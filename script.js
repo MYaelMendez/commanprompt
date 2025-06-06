@@ -1,6 +1,8 @@
 const cli = document.getElementById('cli');
 const cursor = document.getElementById('cursor');
 const input = document.getElementById('input');
+const history = [];
+let historyIndex = -1;
 
 const colors = ['#fff', '#00FF00', '#FFA500', '#800080', '#00FFFF', '#FF00FF'];
 const emojis = ['⚫️', '🟢', '🍊', '🟣', '⚪️', '🗝️'];
@@ -72,7 +74,22 @@ function processCommand(command) {
 input.addEventListener('keyup', (event) => {
     if (event.key === 'Enter') {
         processCommand(input.value);
+        history.unshift(input.value);
+        historyIndex = -1;
         input.value = '';
+    } else if (event.key === 'ArrowUp') {
+        if (historyIndex < history.length - 1) {
+            historyIndex++;
+            input.value = history[historyIndex];
+        }
+    } else if (event.key === 'ArrowDown') {
+        if (historyIndex > 0) {
+            historyIndex--;
+            input.value = history[historyIndex];
+        } else {
+            historyIndex = -1;
+            input.value = '';
+        }
     }
 });
 

@@ -55,6 +55,7 @@ function elasticEffect() {
 }
 
 function processCommand(command) {
+    elasticEffect();
     const idx = Math.floor(Math.random() * colors.length);
     cursor.style.color = colors[idx];
     input.style.color = colors[idx];

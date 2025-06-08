@@ -3,6 +3,7 @@ const cursor = document.getElementById('cursor');
 const input = document.getElementById('input');
 const universe = document.getElementById('universe');
 
+const universe = document.getElementById('universe');
 const colors = ['#fff', '#00FF00', '#FFA500', '#800080', '#00FFFF', '#FF00FF'];
 const emojis = ['⚫️', '🟢', '🍊', '🟣', '⚪️', '🗝️'];
 const wordToEmoji = {

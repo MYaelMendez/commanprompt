@@ -63,3 +63,9 @@ body {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.2); }
 }
+
+#map {
+    width: 80vw;
+    height: 50vh;
+    margin-top: 2vh;
+}

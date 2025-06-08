@@ -2,6 +2,15 @@ const cli = document.getElementById('cli');
 const cursor = document.getElementById('cursor');
 const input = document.getElementById('input');
 
+const GOOGLE_MAPS_API_KEY = 'AIzaSyAl3z3_MAYF4bkvrs2kwoDMhFvEHP2NfvA';
+let map;
+window.initMap = function() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 0, lng: 0 },
+        zoom: 2
+    });
+};
+
 const colors = ['#fff', '#00FF00', '#FFA500', '#800080', '#00FFFF', '#FF00FF'];
 const emojis = ['⚫️', '🟢', '🍊', '🟣', '⚪️', '🗝️'];
 const wordToEmoji = {

@@ -12,3 +12,14 @@ access to download the files. To complete the integration:
 
 After copying, you may commit the files or keep them as a submodule depending
 on your workflow.
+
+## Running the Project
+
+The interface is a simple static page. To try it out locally:
+
+1. Open `index.html` directly in your web browser.
+2. Alternatively, serve the repository with any static file server, e.g.:
+   ```bash
+   python3 -m http.server
+   ```
+   Then navigate to `http://localhost:8000/index.html`.

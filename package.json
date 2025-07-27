@@ -1,0 +1,63 @@
+{
+  "name": "qr-constellation-ide",
+  "version": "1.0.0",
+  "description": "Electron QR-Constellation IDE with Cinematic Constellation Mode and LoRA Support",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron . --no-sandbox",
+    "dev": "electron . --dev --no-sandbox",
+    "build": "electron-builder",
+    "build:mac": "electron-builder --mac",
+    "build:win": "electron-builder --win",
+    "pack": "electron-builder --dir",
+    "dist": "npm run build"
+  },
+  "keywords": [
+    "electron",
+    "qr-code",
+    "constellation",
+    "lora",
+    "ai",
+    "llm"
+  ],
+  "author": "MYaelMendez",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.8.0"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.3",
+    "jimp": "^0.22.10",
+    "three": "^0.159.0",
+    "express": "^4.18.2",
+    "socket.io": "^4.7.4",
+    "cors": "^2.8.5"
+  },
+  "build": {
+    "appId": "com.myaelmendez.qr-constellation-ide",
+    "productName": "QR-Constellation IDE",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "renderer/",
+      "backend/",
+      "assets/",
+      "node_modules/"
+    ],
+    "mac": {
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.developer-tools"
+    },
+    "win": {
+      "icon": "assets/icon.ico",
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

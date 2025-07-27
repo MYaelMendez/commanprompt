@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR-Constellation IDE - Web Demo</title>
+    <link rel="stylesheet" href="renderer/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header id="app-header">
+        <div class="header-content">
+            <h1>⚫️ QR-Constellation IDE - Web Demo</h1>
+            <div class="header-controls">
+                <button id="import-btn" class="header-btn">Import Stack</button>
+                <button id="export-btn" class="header-btn">Export Stack</button>
+                <button id="constellation-btn" class="header-btn">Constellation Mode</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div id="main-container">
+        <!-- Left Panel - Controls -->
+        <aside id="left-panel">
+            <div class="panel-section">
+                <h3>QR Generation</h3>
+                <div class="input-group">
+                    <label for="qr-input">Data:</label>
+                    <textarea id="qr-input" placeholder="Enter data to encode...">Hello QR-Constellation IDE! This is a demo of the cinematic QR visualization system with LoRA support.</textarea>
+                </div>
+                <div class="input-group">
+                    <label for="qr-size">Size:</label>
+                    <input type="range" id="qr-size" min="128" max="512" value="256">
+                    <span id="size-value">256px</span>
+                </div>
+                <button id="generate-qr-btn" class="primary-btn">Generate QR</button>
+            </div>
+
+            <div class="panel-section">
+                <h3>LoRA Configuration</h3>
+                <div class="input-group">
+                    <label for="lora-rank">Rank:</label>
+                    <select id="lora-rank">
+                        <option value="4">4</option>
+                        <option value="8">8</option>
+                        <option value="16" selected>16</option>
+                        <option value="32">32</option>
+                        <option value="64">64</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="lora-alpha">Alpha:</label>
+                    <input type="number" id="lora-alpha" value="32" min="1" max="128">
+                </div>
+                <div class="input-group">
+                    <label for="lora-dropout">Dropout:</label>
+                    <input type="range" id="lora-dropout" min="0" max="0.5" step="0.01" value="0.1">
+                    <span id="dropout-value">0.1</span>
+                </div>
+                <button id="apply-lora-btn" class="secondary-btn">Apply LoRA</button>
+            </div>
+
+            <div class="panel-section">
+                <h3>Stack Layers</h3>
+                <div id="layers-list">
+                    <!-- Layers will be dynamically added here -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center Panel - Visualization -->
+        <main id="center-panel">
+            <!-- Universe Background -->
+            <div id="universe"></div>
+            
+            <!-- QR Constellation Canvas -->
+            <canvas id="constellation-canvas"></canvas>
+            
+            <!-- CLI Interface -->
+            <div id="cli-container">
+                <div id="cli">
+                    <span id="cursor">⚫️</span>
+                </div>
+                <input type="text" id="input" autofocus placeholder="Try: gen hello, constellation, lora apply">
+            </div>
+
+            <!-- Animation Controls -->
+            <div id="animation-controls" class="hidden">
+                <button id="play-animation">▶️ Play</button>
+                <button id="pause-animation">⏸️ Pause</button>
+                <button id="stop-animation">⏹️ Stop</button>
+                <div class="progress-container">
+                    <div id="animation-progress"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Panel - Information -->
+        <aside id="right-panel">
+            <div class="panel-section">
+                <h3>QR Information</h3>
+                <div id="qr-info">
+                    <p>No QR code selected</p>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3>LoRA Status</h3>
+                <div id="lora-status">
+                    <p>No LoRA weights applied</p>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3>Animation Settings</h3>
+                <div class="input-group">
+                    <label for="animation-speed">Speed:</label>
+                    <input type="range" id="animation-speed" min="0.1" max="3" step="0.1" value="1">
+                    <span id="speed-value">1x</span>
+                </div>
+                <div class="input-group">
+                    <label for="camera-zoom">Zoom:</label>
+                    <input type="range" id="camera-zoom" min="0.5" max="5" step="0.1" value="1">
+                    <span id="zoom-value">1x</span>
+                </div>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="show-particles" checked>
+                        Show Particles
+                    </label>
+                    <label>
+                        <input type="checkbox" id="auto-rotate" checked>
+                        Auto Rotate
+                    </label>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modal for Stack Operations -->
+    <div id="modal-overlay" class="hidden">
+        <div id="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Modal Title</h3>
+                <button id="modal-close">×</button>
+            </div>
+            <div class="modal-content" id="modal-content">
+                <!-- Dynamic content -->
+            </div>
+            <div class="modal-footer">
+                <button id="modal-cancel" class="secondary-btn">Cancel</button>
+                <button id="modal-confirm" class="primary-btn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Bar -->
+    <footer id="status-bar">
+        <div class="status-item">
+            <span>Layers: <span id="layer-count">0</span></span>
+        </div>
+        <div class="status-item">
+            <span>Animation: <span id="animation-status">Stopped</span></span>
+        </div>
+        <div class="status-item">
+            <span>LoRA: <span id="lora-count">0</span> applied</span>
+        </div>
+        <div class="status-item">
+            <span>Mode: Web Demo</span>
+        </div>
+    </footer>
+
+    <!-- Web-specific Mock API -->
+    <script src="web-demo-api.js"></script>
+    <script src="renderer/app.js"></script>
+    <script src="renderer/constellation-renderer.js"></script>
+    <script src="renderer/lora-ui.js"></script>
+</body>
+</html>
